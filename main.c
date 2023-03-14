@@ -12,17 +12,37 @@ void solveTour(int x, int y, int boardSize);
 void printBoard(int boardSize, int board[boardSize][boardSize]);
 int main()
 {
-    int boardSize, startX, startY;
+    int boardSize, startX, startY, loop = 1;
+    
+    while(loop == 1)
+    {
+        printf("\nIveskite lentos dydi: ");
+        scanf("%d", &boardSize);
+        printf("Iveskite per tarpa pradines koordinates: ");
+        scanf("%d %d", &startX, &startY);
+        printf("\n\nRunning...\n\n");
+
+        solveTour(startX, startY, boardSize);
+
+        printf("\n\nIveskite:\n1 - kartoti\n0 - baigti\n\n");
+        scanf("%d", &loop);
+    }
+    
+
+
+
+
+
+    return 0;
+}
+
+
+void solveTour(int startX, int startY, int boardSize)
+{
+    int board[boardSize][boardSize];
+
     int moveX[8] = { 2, 1, -1, -2, -2, -1, 1, 2 };
     int moveY[8] = { 1, 2, 2, 1, -1, -2, -2, -1 };
-
-    printf("Iveskite lentos dydi: ");
-    scanf("%d", &boardSize);
-    printf("Iveskite per tarpa pradines koordinates: ");
-    scanf("%d %d", &startX, &startY);
-    printf("\n\nRunning...\n\n");
-
-    int board[boardSize][boardSize];
 
     // int moveX[8] = { 1, 1, -1, -1, 2, 2, -2, -2 };
     // int moveY[8] = { 2, -2, 2, -2, 1, -1, 1, -1 };
@@ -32,9 +52,6 @@ int main()
         for(int j = 0; j < boardSize; j++)
             board[i][j] = 0;
     }
-
-    
-    
 
     board[startX][startY] = 1;
     if(solveTourRec(startX, startY, boardSize, board, moveX, moveY, 1) == false)
@@ -53,16 +70,6 @@ int main()
             printf("\n");
             
         }
-
-
-
-    return 0;
-}
-
-
-void solveTour(int x, int y, int boardSize)
-{
-
 }
 
 bool solveTourRec(int x, int y, int boardSize, int board[][boardSize], int moveX[], int moveY[], int step)
@@ -90,7 +97,7 @@ bool solveTourRec(int x, int y, int boardSize, int board[][boardSize], int moveX
         if(validMove(boardSize, board, nextX, nextY))
         {
             board[nextX][nextY] = step + 1;
-            if(solveTour(nextX, nextY, boardSize, board, moveX, moveY, step + 1))
+            if(solveTourRec(nextX, nextY, boardSize, board, moveX, moveY, step + 1))
                 return true;
             else
                 board[nextX][nextY] = 0;
