@@ -4,7 +4,6 @@
 
 
 long attempts = 1;
-int milestones = 0;
 
 char validMove(int boardSize, int board[][boardSize], int nextX, int nextY);
 bool solveTourRec(int x, int y, int boardSize, int board[][boardSize], int moveX[], int moveY[], char moveNames[8][3], int step, FILE *myFileBig);
@@ -56,39 +55,48 @@ void solveTour(int startX, int startY, int boardSize, FILE *myFileBig, FILE *myF
 
     board[startX][startY] = 1;
 
-    fprintf(myFileBig, "PIRMA DALIS. Duomenys\n"
+    fprintf(myFileBig, "PIRMA DALIS.\n"
+    "2 uzduotis, 4 variantas. Evgenij Shapovalov, 3 grupe, 2 pogrupis.\n\n"
+    "1.1 SALYGA: Apeiti kvadrata N*N zirgo ejimais. Vartotojas nurodo kvadrato dydi ir pradine padeti.\n\n"
+    "1.2 PRADINE BUSENA:\n"
     "1) Lenta %dx%d.\n"
     "2) Pradine zirgo padetis: X=%d, Y=%d, L=1.\n\n"
     "ANTRA DALIS. Vykdymas", boardSize, boardSize, startX+1, startY+1);
 
-    fprintf(myFileSmall, "PIRMA DALIS. Duomenys\n"
+    fprintf(myFileSmall, "PIRMA DALIS.\n"
+    "2 uzduotis, 4 variantas. Evgenij Shapovalov, 3 grupe, 2 pogrupis\n\n"
+    "1.1 SALYGA: Apeiti kvadrata N*N zirgo ejimais. Vartotojas nurodo kvadrato dydi ir pradine padeti.\n\n"
+    "1.2 PRADINE BUSENA:\n"
     "1) Lenta %dx%d.\n"
     "2) Pradine zirgo padetis: X=%d, Y=%d, L=1.\n\n" , boardSize, boardSize, startX+1, startY+1);
 
-     printf("PIRMA DALIS. Duomenys\n"
+    printf("PIRMA DALIS.\n"
+    "2 uzduotis, 4 variantas. Evgenij Shapovalov, 3 grupe, 2 pogrupis\n\n"
+    "1.1 SALYGA: Apeiti kvadrata N*N zirgo ejimais. Vartotojas nurodo kvadrato dydi ir pradine padeti.\n\n"
+    "1.2 PRADINE BUSENA:\n"
     "1) Lenta %dx%d.\n"
     "2) Pradine zirgo padetis: X=%d, Y=%d, L=1.\n\n" , boardSize, boardSize, startX+1, startY+1);
 
     if(solveTourRec(startX, startY, boardSize, board, moveX, moveY, moveNames, 1, myFileBig) == false)
     {
-        fprintf(myFileBig, "\n\nTRECIA DALYS. Rezultatai\n"
+        fprintf(myFileBig, "\n\nTRECIA DALIS. Rezultatai\n"
         "1) Apejimo nera. Bandymu %d\n", attempts-1);
-        fprintf(myFileSmall, "\n\nTRECIA DALYS. Rezultatai\n"
+        fprintf(myFileSmall, "\n\nTRECIA DALIS. Rezultatai\n"
         "1) Apejimo nera. Bandymu %d\n", attempts-1);
-        printf("\n\nTRECIA DALYS. Rezultatai\n"
+        printf("\n\nTRECIA DALIS. Rezultatai\n"
         "1) Apejimo nera. Bandymu %d\n", attempts-1);
     }
     else
     {
-        fprintf(myFileBig, "\n\nTRECIA DALYS. Rezultatai\n"
+        fprintf(myFileBig, "\n\nTRECIA DALIS. Rezultatai\n"
         "1) Apejimas rastas. Bandymu: %d\n"
         "Apejimas grafiskai:\n\n", attempts-1);
 
-        fprintf(myFileSmall, "\n\nTRECIA DALYS. Rezultatai\n"
+        fprintf(myFileSmall, "\n\nTRECIA DALIS. Rezultatai\n"
         "1) Apejimas rastas. Bandymu: %d\n"
         "Apejimas grafiskai:\n\n", attempts-1);
 
-        printf("\n\nTRECIA DALYS. Rezultatai\n"
+        printf("\n\nTRECIA DALIS. Rezultatai\n"
         "1) Apejimas rastas. Bandymu: %d\n"
         "Apejimas grafiskai:\n\n", attempts-1);
 
@@ -107,9 +115,16 @@ bool solveTourRec(int x, int y, int boardSize, int board[][boardSize], int moveX
         nextX = x + moveX[i];
         nextY = y + moveY[i];
 
+        
+       
+        fprintf(myFileBig, "\n% 8d)", attempts);
+        
+        for(int r = 0; r < step-1; r++)
+            fprintf(myFileBig, "-");
+
         if(validMove(boardSize, board, nextX, nextY) == 1)
         {
-            fprintf(myFileBig, "\n%d) %s. U=%d, V=%d. L=%d. Laisva. LENTA[%d,%d]:=%d.", attempts, moveNames[i], nextX+1, nextY+1, step+1, nextX+1, nextY+1, step+1);
+            fprintf(myFileBig, "%s. U=%d, V=%d. L=%d. Laisva. LENTA[%d,%d]:=%d.", moveNames[i], nextX+1, nextY+1, step+1, nextX+1, nextY+1, step+1);
             attempts++;
 
             board[nextY][nextX] = step + 1;
@@ -120,12 +135,12 @@ bool solveTourRec(int x, int y, int boardSize, int board[][boardSize], int moveX
         }  
         else if(validMove(boardSize, board, nextX, nextY) == 0)
         {
-            fprintf(myFileBig, "\n%d) %s. U=%d, V=%d. L=%d. Uzimta.", attempts, moveNames[i], nextX+1, nextY+1, step+1);
+            fprintf(myFileBig, "%s. U=%d, V=%d. L=%d. Uzimta.", moveNames[i], nextX+1, nextY+1, step+1);
             attempts++;
         }  
         else
         {
-            fprintf(myFileBig, "\n%d) %s. U=%d, V=%d. L=%d. Uz krasto.", attempts, moveNames[i], nextX+1, nextY+1, step+1);
+            fprintf(myFileBig, "%s. U=%d, V=%d. L=%d. Uz krasto.", moveNames[i], nextX+1, nextY+1, step+1);
             attempts++;
         }
     }
@@ -150,23 +165,10 @@ char validMove(int boardSize, int board[][boardSize], int nextX, int nextY)
 
 void printBoard(int boardSize, int board[boardSize][boardSize], FILE *myFileBig, FILE *myFileSmall)
 {
-    printAll("   ", myFileBig, myFileSmall);
-    for(int i = 1; i <= boardSize; i++)
-    {
-        printf("  %d",i);
-        fprintf(myFileBig,"  %d",i);
-        fprintf(myFileSmall,"  %d",i);
-    }
-        
-    printAll("\n  ", myFileBig, myFileSmall);
-    for(int i = 0; i < boardSize+2; i++)
-    {
-        printAll("---", myFileBig, myFileSmall);
-    }
 
-    printAll(" X, U\n", myFileBig, myFileSmall);
 
-    for(int i = 0; i < boardSize; i++)
+    printAll(" Y,V\n\n", myFileBig, myFileSmall);
+    for(int i = boardSize-1; i >= 0; i--)
         {
             printf("%d |",i+1);
             fprintf(myFileBig, "%d |",i+1);
@@ -191,7 +193,22 @@ void printBoard(int boardSize, int board[boardSize][boardSize], FILE *myFileBig,
             printAll("\n", myFileBig, myFileSmall);
             
         }
-        printAll("  |\n  Y, V\n\n\n", myFileBig, myFileSmall);
+    printAll("   -", myFileBig, myFileSmall);
+    for(int i = 0; i < boardSize; i++)
+    {
+        printAll("---", myFileBig, myFileSmall);
+    }
+    
+    printAll("  X,U\n", myFileBig, myFileSmall);
+
+    printAll("     ", myFileBig, myFileSmall);
+    for(int i = 1; i <= boardSize; i++)
+    {
+        printf("%d  ",i);
+        fprintf(myFileBig,"%d  ",i);
+        fprintf(myFileSmall,"%d  ",i);
+    }
+        
 }
 
 void printAll(char string[], FILE *myFileBig, FILE *myFileSmall)
