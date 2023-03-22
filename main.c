@@ -112,11 +112,11 @@ bool solveTourRec(int x, int y, int boardSize, int board[][boardSize], int moveX
             fprintf(myFileBig, "\n%d) %s. U=%d, V=%d. L=%d. Laisva. LENTA[%d,%d]:=%d.", attempts, moveNames[i], nextX+1, nextY+1, step+1, nextX+1, nextY+1, step+1);
             attempts++;
 
-            board[nextX][nextY] = step + 1;
+            board[nextY][nextX] = step + 1;
             if(solveTourRec(nextX, nextY, boardSize, board, moveX, moveY, moveNames, step + 1, myFileBig))
                 return true;
             else
-                board[nextX][nextY] = 0;
+                board[nextY][nextX] = 0;
         }  
         else if(validMove(boardSize, board, nextX, nextY) == 0)
         {
@@ -140,7 +140,7 @@ char validMove(int boardSize, int board[][boardSize], int nextX, int nextY)
 {
     if(nextX < 0 || nextX >= boardSize || nextY < 0 || nextY >= boardSize)
         return -1;
-    else if(board[nextX][nextY] != 0)
+    else if(board[nextY][nextX] != 0)
         return 0;
     else
         return 1;
