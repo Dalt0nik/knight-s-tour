@@ -29,7 +29,7 @@ int main()
     myFileBig = fopen(fileNameBig, "w");
     myFileSmall = fopen(fileNameSmall, "w");
 
-    solveTour(startX-1, startY-1, boardSize, myFileBig, myFileSmall);
+    solveTour(startX-1, startY-1, boardSize, myFileBig, myFileSmall); //apversta
    
 
     return 0;
@@ -89,16 +89,16 @@ void solveTour(int startX, int startY, int boardSize, FILE *myFileBig, FILE *myF
     else
     {
         fprintf(myFileBig, "\n\nTRECIA DALIS. Rezultatai\n"
-        "1) Apejimas rastas. Bandymu: %d\n"
-        "Apejimas grafiskai:\n\n", attempts-1);
+        "1) Apejimas rastas. Bandymu: %d.\n"
+        "2) Apejimas grafiskai:\n\n", attempts-1);
 
         fprintf(myFileSmall, "\n\nTRECIA DALIS. Rezultatai\n"
-        "1) Apejimas rastas. Bandymu: %d\n"
-        "Apejimas grafiskai:\n\n", attempts-1);
+        "1) Apejimas rastas. Bandymu: %d.\n"
+        "2) Apejimas grafiskai:\n\n", attempts-1);
 
         printf("\n\nTRECIA DALIS. Rezultatai\n"
-        "1) Apejimas rastas. Bandymu: %d\n"
-        "Apejimas grafiskai:\n\n", attempts-1);
+        "1) Apejimas rastas. Bandymu: %d.\n"
+        "2) Apejimas grafiskai:\n\n", attempts-1);
 
         printBoard(boardSize, board, myFileBig, myFileSmall);
     }
